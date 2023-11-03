@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
-import './globals.css';
+import '../styles/globals.scss';
 import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: `TypeScript starter for Next.js`,
-  description: `TypeScript starter for Next.js that includes all you need to build amazing apps`,
+  title: {
+    default: `BMW Vipers`,
+    template: `%s | BMW`,
+  },
+  description: `Next.js challenge for BMW Vipers`,
+  icons: {
+    icon: 'bmw.png',
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
     </html>
   );
 }
