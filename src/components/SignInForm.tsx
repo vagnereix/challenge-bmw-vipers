@@ -8,6 +8,7 @@ import { Input } from './Input';
 import { Button } from './Button';
 import { useRouter } from 'next/navigation';
 import { Customer } from '@prisma/client';
+import { setCookie } from 'cookies-next';
 
 export function SignInForm() {
   const { push } = useRouter();
@@ -28,13 +29,20 @@ export function SignInForm() {
     }
 
     try {
-      const { data } = await axios.get<Customer>('/api/customer', {
-        params: {
-          email: current?.value,
+      const { data } = await axios.get<{ customer: Customer }>(
+        '/api/customer',
+        {
+          params: {
+            email: current?.value,
+          },
         },
+      );
+
+      setCookie('@bmw.customer.email', JSON.stringify(data.customer.email), {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7) /** 7 days */,
       });
 
-      if (data) push(`/orders`);
+      push(`/orders`);
     } catch (error) {
       setError(`User not found`);
       setLoading(false);
