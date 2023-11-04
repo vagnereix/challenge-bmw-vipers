@@ -1,44 +1,54 @@
-import { prisma } from '@/services/prisma';
-import { getCustomer } from '@/utils';
+import { PrismaCustomerRepository } from '@/domain/repositories/customers/PrismaCustomerRepository';
+import { CreateCustomerUseCase } from '@/domain/useCases/customers/CreateCustomerUseCase';
+import { GetCustomerUseCase } from '@/domain/useCases/customers/GetCustomerUseCase';
 import { Customer } from '@prisma/client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get('email') as string;
 
-  const customer = await getCustomer(email);
+  const prismaCustomerRepository = new PrismaCustomerRepository();
+  const getCustomerUseCase = new GetCustomerUseCase(prismaCustomerRepository);
 
-  if (customer) {
-    return NextResponse.json(
-      {
-        customer,
-      },
-      { status: 200 },
-    );
+  try {
+    const customer = await getCustomerUseCase.execute(email);
+
+    if (customer) {
+      return NextResponse.json(
+        {
+          customer,
+        },
+        { status: 200 },
+      );
+    }
+  } catch (error: unknown) {
+    const { message } = error as Error;
+
+    return NextResponse.json({ error: message }, { status: 404 });
   }
-
-  return NextResponse.json({ error: 'Not Found' }, { status: 404 });
 }
 
 export async function POST(request: NextRequest) {
   const body: Customer = await request.json();
-  const hasCustomer = await getCustomer(body.email);
 
-  if (hasCustomer) {
-    return NextResponse.json(
-      { error: 'Customer already exists' },
-      { status: 400 },
-    );
-  }
+  const prismaCustomerRepository = new PrismaCustomerRepository();
+  const getCustomerUseCase = new GetCustomerUseCase(prismaCustomerRepository);
+  const createCustomerUseCase = new CreateCustomerUseCase(
+    prismaCustomerRepository,
+  );
 
   try {
-    const customer = await prisma.customer.create({
-      data: {
-        ...body,
-      },
-    });
+    const hasCustomer = await getCustomerUseCase.execute(body.email);
+
+    if (hasCustomer) {
+      return NextResponse.json(
+        { error: 'Customer already exists' },
+        { status: 400 },
+      );
+    }
+
+    const customer = await createCustomerUseCase.execute(body);
 
     if (customer) {
       return NextResponse.json(
@@ -49,13 +59,8 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error: unknown) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
+    const { message } = error as Error;
 
-    return NextResponse.json(
-      { error: 'Error on register new customer' },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
