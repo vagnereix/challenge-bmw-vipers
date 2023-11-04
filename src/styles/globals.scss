@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply gradient-brand;
+}
+
+.gradient-default {
+  @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
+}
+
+.gradient-text-error {
+  @apply bg-gradient-to-r from-red-600 to-red-400 text-transparent bg-clip-text;
+}
+
+.gradient-text-light {
+  @apply bg-gradient-to-r from-white  to-brand-default text-transparent bg-clip-text;
+}
+
+.gradient-text-dark {
+  @apply bg-gradient-to-r from-black  to-brand-default text-transparent bg-clip-text;
+}
+
+.gradient-brand {
+  @apply bg-gradient-to-r from-brand-default  to-black;
+}

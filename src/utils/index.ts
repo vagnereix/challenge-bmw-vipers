@@ -1,4 +1,4 @@
-import { prisma } from '@/service/prisma';
+import { prisma } from '@/services/prisma';
 
 export async function getCustomerOrders(id: string) {
   return await prisma.order.findMany({

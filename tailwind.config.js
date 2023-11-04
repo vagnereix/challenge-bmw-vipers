@@ -8,7 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: `#0166B1`,
+        brand: {
+          default: '#0166B1',
+          bg: '#0000006c',
+        },
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)'],
       },
     },
   },
