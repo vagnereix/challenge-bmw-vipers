@@ -12,6 +12,3 @@ export default function Home() {
     </main>
   );
 }
-
-// backdrop-filter: blur(10px);
-//     background: #ffffffbf;

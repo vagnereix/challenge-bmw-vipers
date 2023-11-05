@@ -58,6 +58,7 @@ export function SignInForm() {
       <form
         className="flex flex-col gap-2 items-start justify-center w-full"
         onSubmit={onSubmit}
+        role="form"
       >
         <Input
           ref={emailRef}
@@ -75,7 +76,11 @@ export function SignInForm() {
 
         <Button type="submit">
           {loading ? (
-            <Loader2 color="black" className="animate-spin" />
+            <Loader2
+              color="black"
+              className="animate-spin"
+              data-testid="loading-indicator"
+            />
           ) : (
             <span className="gradient-text-dark">Sign in</span>
           )}
