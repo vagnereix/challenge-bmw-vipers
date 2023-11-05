@@ -13,8 +13,8 @@ export function OrdersList({ orders }: OrdersListProps) {
 
   function handleDeleteOrder(orderId: string) {
     api.delete(`/order/${orderId}`, {
-      params: {
-        userId: user?.id,
+      headers: {
+        Authorization: user?.id,
       },
     });
   }

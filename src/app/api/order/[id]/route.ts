@@ -8,8 +8,8 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId') as string;
+  const { headers } = request;
+  const userId = headers.get('authorization');
 
   const prismaOrderRepository = new PrismaOrderRepository();
   const getOrderUseCase = new GetOrderUseCase(prismaOrderRepository);
