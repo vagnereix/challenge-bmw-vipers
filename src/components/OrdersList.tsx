@@ -1,5 +1,7 @@
 'use client';
 
+import { useAuth } from '@/context/useAuth';
+import { api } from '@/services/api';
 import { Order } from '@prisma/client';
 import { Trash } from 'lucide-react';
 import Link from 'next/link';
@@ -7,6 +9,16 @@ import Link from 'next/link';
 type OrdersListProps = { orders: Order[] };
 
 export function OrdersList({ orders }: OrdersListProps) {
+  const { user } = useAuth();
+
+  function handleDeleteOrder(orderId: string) {
+    api.delete(`/order/${orderId}`, {
+      params: {
+        userId: user?.id,
+      },
+    });
+  }
+
   return (
     <>
       {orders.map((order) => (
@@ -20,11 +32,14 @@ export function OrdersList({ orders }: OrdersListProps) {
             </Link>
           </td>
 
-          <td
-            title="Delete order"
-            className="p-4 text-center hover:opacity-80 transition w-full flex items-end justify-center hover:cursor-pointer"
-          >
-            <Trash className="text-red-600" />
+          <td className="p-4 text-center hover:opacity-80 transition w-full flex items-end justify-center hover:cursor-pointer">
+            <button
+              type="button"
+              title="Delete order"
+              onClick={() => handleDeleteOrder(order.id)}
+            >
+              <Trash className="text-red-600" />
+            </button>
           </td>
         </tr>
       ))}
