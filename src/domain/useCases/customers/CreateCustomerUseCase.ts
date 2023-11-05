@@ -1,7 +1,7 @@
 import { ICustomersRepository } from '@/domain/repositories/customers/ICustomersRepository';
 import { Customer } from '@prisma/client';
 
-type CustomerType = Pick<Customer, 'name' | 'email'>;
+type CustomerTypeDTO = Pick<Customer, 'name' | 'email'>;
 
 export class CreateCustomerUseCase {
   customersRepository: ICustomersRepository;
@@ -10,7 +10,7 @@ export class CreateCustomerUseCase {
     this.customersRepository = customersRepository;
   }
 
-  async execute(data: CustomerType) {
+  async execute(data: CustomerTypeDTO) {
     const customerAlreadyExists =
       await this.customersRepository.getCustomerByEmail(data.email);
 

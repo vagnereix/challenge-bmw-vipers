@@ -2,10 +2,10 @@ import { prisma } from '@/services/prisma';
 import { Order } from '@prisma/client';
 import { IOrdersRepository } from './IOrdersRepository';
 
-type OrderType = Pick<Order, 'title' | 'customerId'>;
+type OrderTypeDTO = Pick<Order, 'title' | 'customerId'>;
 
 export class PrismaOrderRepository implements IOrdersRepository {
-  async create(data: OrderType): Promise<Order> {
+  async create(data: OrderTypeDTO): Promise<Order> {
     return await prisma.order.create({
       data,
     });
