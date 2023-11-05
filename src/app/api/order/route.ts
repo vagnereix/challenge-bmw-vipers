@@ -1,6 +1,7 @@
 import { PrismaCustomerRepository } from '@/domain/repositories/customers/PrismaCustomerRepository';
-import { GetCustomerOrdersUseCase } from '@/domain/useCases/customers/GetCustomerOrdersUseCase';
+import { PrismaOrderRepository } from '@/domain/repositories/orders/PrismaOrderRepository';
 import { GetCustomerUseCase } from '@/domain/useCases/customers/GetCustomerUseCase';
+import { GetCustomerOrdersUseCase } from '@/domain/useCases/orders/GetCustomerOrdersUseCase';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -8,9 +9,11 @@ export async function GET(request: NextRequest) {
   const email = searchParams.get('email') as string;
 
   const prismaCustomerRepository = new PrismaCustomerRepository();
+  const prismaOrderRepository = new PrismaOrderRepository();
+
   const getCustomerUseCase = new GetCustomerUseCase(prismaCustomerRepository);
   const getCustomerOrdersUseCase = new GetCustomerOrdersUseCase(
-    prismaCustomerRepository,
+    prismaOrderRepository,
   );
 
   try {

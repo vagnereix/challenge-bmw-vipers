@@ -16,12 +16,4 @@ export class PrismaCustomerRepository implements ICustomersRepository {
       },
     });
   }
-
-  async getCustomerOrders(id: string) {
-    return await prisma.order.findMany({
-      where: {
-        customerId: id,
-      },
-    });
-  }
 }
