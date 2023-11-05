@@ -1,7 +1,6 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import axios from 'axios';
 import { FormEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Input } from './Input';
@@ -9,6 +8,7 @@ import { Button } from './Button';
 import { useRouter } from 'next/navigation';
 import { Customer } from '@prisma/client';
 import { setCookie } from 'cookies-next';
+import { api } from '@/services/api';
 
 export function SignInForm() {
   const { push } = useRouter();
@@ -29,14 +29,11 @@ export function SignInForm() {
     }
 
     try {
-      const { data } = await axios.get<{ customer: Customer }>(
-        '/api/customer',
-        {
-          params: {
-            email: current?.value,
-          },
+      const { data } = await api.get<{ customer: Customer }>('/customer', {
+        params: {
+          email: current?.value,
         },
-      );
+      });
 
       setCookie('@bmw.customer.email', JSON.stringify(data.customer.email), {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7) /** 7 days */,

@@ -1,12 +1,14 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { FormEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Input } from './Input';
 import { Button } from './Button';
 import { useRouter } from 'next/navigation';
+import { api } from '@/services/api';
+import { Customer } from '@prisma/client';
 
 export function SignUpForm() {
   const { push } = useRouter();
@@ -29,7 +31,7 @@ export function SignUpForm() {
     }
 
     try {
-      const { data } = await axios.post('/api/customer', {
+      await api.post<{ customer: Customer }>('/customer', {
         name: nameRef.current?.value,
         email: emailRef.current?.value,
       });
