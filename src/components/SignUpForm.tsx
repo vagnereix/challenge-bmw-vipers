@@ -34,8 +34,6 @@ export function SignUpForm() {
         email: emailRef.current?.value,
       });
 
-      console.log(`customer created`, data);
-      setLoading(false);
       push('/sign-in');
     } catch (error: unknown) {
       const { response } = error as AxiosError<{ error: string }>;
@@ -54,6 +52,7 @@ export function SignUpForm() {
       <form
         className="flex flex-col gap-2 items-start justify-center w-full"
         onSubmit={onSubmit}
+        role="form"
       >
         <Input
           ref={nameRef}
@@ -79,7 +78,11 @@ export function SignUpForm() {
 
         <Button type="submit">
           {loading ? (
-            <Loader2 color="black" className="animate-spin" />
+            <Loader2
+              color="black"
+              className="animate-spin"
+              data-testid="loading-indicator"
+            />
           ) : (
             <span className="gradient-text-dark">Register</span>
           )}
