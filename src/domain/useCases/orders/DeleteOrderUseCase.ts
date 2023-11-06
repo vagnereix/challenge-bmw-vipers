@@ -1,6 +1,6 @@
 import { IOrdersRepository } from '@/domain/repositories/orders/IOrdersRepository';
 
-export class DeleteCustomerOrderUseCase {
+export class DeleteOrderUseCase {
   ordersRepository: IOrdersRepository;
 
   constructor(ordersRepository: IOrdersRepository) {

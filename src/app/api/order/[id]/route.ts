@@ -1,5 +1,5 @@
 import { PrismaOrderRepository } from '@/domain/repositories/orders/PrismaOrderRepository';
-import { DeleteCustomerOrderUseCase } from '@/domain/useCases/orders/DeleteCustomerOrderUseCase';
+import { DeleteOrderUseCase } from '@/domain/useCases/orders/DeleteOrderUseCase';
 import { GetOrderUseCase } from '@/domain/useCases/orders/GetOrderUseCase';
 import { UpdateOrderUseCase } from '@/domain/useCases/orders/UpdateOrderUseCase';
 import { Order } from '@prisma/client';
@@ -42,7 +42,7 @@ export async function DELETE(
 
   const prismaOrderRepository = new PrismaOrderRepository();
   const getOrderUseCase = new GetOrderUseCase(prismaOrderRepository);
-  const deleteCustomerOrderUseCase = new DeleteCustomerOrderUseCase(
+  const deleteCustomerOrderUseCase = new DeleteOrderUseCase(
     prismaOrderRepository,
   );
 
