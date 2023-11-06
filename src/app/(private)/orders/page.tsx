@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 export default async function Orders() {
   const email = cookies().get('@bmw.customer.email')?.value;
+
   const { data } = await api.get<{ orders: Order[] }>('/order', {
     params: {
       email: JSON.parse(email as string),

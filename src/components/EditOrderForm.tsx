@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Order } from '@prisma/client';
 import { api } from '@/services/api';
 import { useAuth } from '@/context/useAuth';
+import action from '@/app/actions';
 
 type EditOrderFormProps = {
   order: Order;
@@ -48,7 +49,10 @@ export function EditOrderForm({ order }: EditOrderFormProps) {
         },
       );
 
-      if (status === 200) push(`/orders`);
+      if (status === 200) {
+        action();
+        push('/orders');
+      }
     } catch (error) {
       setError(`Error updating order. Try again later.`);
       setLoading(false);

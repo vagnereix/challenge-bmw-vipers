@@ -1,18 +1,14 @@
 'use client';
 
+import action from '@/app/actions';
 import { useAuth } from '@/context/useAuth';
 import { api } from '@/services/api';
 import { Order } from '@prisma/client';
-import { AxiosError } from 'axios';
 import { Trash } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
-type OrdersListProps = { orders: Order[] };
-
-export function OrdersList({ orders }: OrdersListProps) {
+export function OrdersList({ orders }: { orders: Order[] }) {
   const { user } = useAuth();
-  const { refresh } = useRouter();
 
   async function handleDeleteOrder(orderId: string) {
     try {
@@ -25,17 +21,18 @@ export function OrdersList({ orders }: OrdersListProps) {
         },
       );
 
-      if (status === 200) refresh();
-    } catch (error: unknown) {
-      const { response } = error as AxiosError;
-      console.error(response?.data);
-    }
+      if (status === 200) action();
+    } catch (error: unknown) {}
   }
 
   return (
     <>
       {orders.map((order) => (
-        <tr key={order.id} className="p-4 even:bg-brand-bg">
+        <tr
+          data-testid={`order-${order.title}`}
+          key={order.id}
+          className="p-4 even:bg-brand-bg"
+        >
           <td className="p-4 text-center">
             <Link
               title="View and edit order title"
