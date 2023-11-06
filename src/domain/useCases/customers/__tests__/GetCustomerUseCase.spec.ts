@@ -12,7 +12,6 @@ function makeSut(getCustomerSpy: jest.Mock) {
   const sut = new GetCustomerUseCase({
     create: jest.fn(),
     getCustomerByEmail: jest.fn().mockImplementation(getCustomerSpy),
-    getCustomerOrders: jest.fn(),
   });
 
   return { sut };

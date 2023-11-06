@@ -28,7 +28,7 @@ describe('GetCustomerOrdersUseCase', () => {
   it('should not be able to get customer orders', async () => {
     const { sut } = makeSut(getCustomerOrdersErrorSpy);
 
-    await expect(sut.execute('valid-id')).rejects.toThrow();
+    await expect(sut.execute('invalid-id')).rejects.toThrow();
 
     expect(getCustomerOrdersErrorSpy).toHaveBeenCalled();
   });
