@@ -6,12 +6,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { SignUpForm } from '../SignUpForm';
-import axios from 'axios';
 import React from 'react';
+import { api } from '@/services/api';
 
 const pushMock = jest.fn();
 
-jest.mock('axios');
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {
@@ -48,7 +47,8 @@ describe(`<SignUpForm />`, () => {
   });
 
   it(`should register function work correctly`, async () => {
-    axios.post = jest.fn().mockResolvedValue({
+    jest.spyOn(api, 'post').mockResolvedValue({
+      status: 201,
       data: {
         customer: {
           email: `vagnereix.dev@gmail.com`,
@@ -73,7 +73,7 @@ describe(`<SignUpForm />`, () => {
     await waitFor(() => {
       expect(screen.getByTestId('loading-indicator')).toBeInTheDocument();
 
-      expect(axios.post).toHaveBeenCalledWith(`/api/customer`, {
+      expect(api.post).toHaveBeenCalledWith(`/customer`, {
         name: `Vagner`,
         email: `vagnereix.dev@gmail.com`,
       });
@@ -83,7 +83,7 @@ describe(`<SignUpForm />`, () => {
   });
 
   it(`should work correctly when name or email field is empty`, async () => {
-    axios.get = jest.fn().mockRejectedValue({
+    jest.spyOn(api, 'get').mockRejectedValue({
       message: 'Request failed with status code 404',
       response: {
         data: { error: 'Customer not found' },
@@ -111,10 +111,10 @@ describe(`<SignUpForm />`, () => {
   });
 
   it(`should sign in function work correctly with axios error`, async () => {
-    axios.post = jest.fn().mockRejectedValue({
+    jest.spyOn(api, 'post').mockRejectedValue({
       message: 'Request failed with status code 404',
       response: {
-        data: { error: 'Customer not found' },
+        data: { error: 'Error creating customer' },
         status: 404,
       },
     });
@@ -134,7 +134,7 @@ describe(`<SignUpForm />`, () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Customer not found')).toBeInTheDocument();
+      expect(screen.getByText('Error creating customer')).toBeInTheDocument();
       expect(pushMock).not.toHaveBeenCalled();
     });
   });

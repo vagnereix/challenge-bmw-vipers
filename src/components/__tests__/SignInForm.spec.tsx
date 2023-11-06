@@ -6,12 +6,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { SignInForm } from '../SignInForm';
-import axios from 'axios';
 import React from 'react';
+import { api } from '@/services/api';
 
 const pushMock = jest.fn();
 
-jest.mock('axios');
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {
@@ -47,7 +46,7 @@ describe(`<SignInForm />`, () => {
   });
 
   it(`should sign in function work correctly`, async () => {
-    axios.get = jest.fn().mockResolvedValue({
+    jest.spyOn(api, 'get').mockResolvedValue({
       data: {
         customer: {
           email: `vagnereix.dev@gmail.com`,
@@ -67,7 +66,7 @@ describe(`<SignInForm />`, () => {
     await waitFor(() => {
       expect(screen.getByTestId('loading-indicator')).toBeInTheDocument();
 
-      expect(axios.get).toHaveBeenCalledWith(`/api/customer`, {
+      expect(api.get).toHaveBeenCalledWith(`/customer`, {
         params: {
           email: `vagnereix.dev@gmail.com`,
         },
@@ -78,7 +77,7 @@ describe(`<SignInForm />`, () => {
   });
 
   it(`should work correctly when email field is empty`, async () => {
-    axios.get = jest.fn().mockRejectedValue({
+    jest.spyOn(api, 'get').mockRejectedValue({
       message: 'Request failed with status code 404',
       response: {
         data: { error: 'Customer not found' },
@@ -103,7 +102,7 @@ describe(`<SignInForm />`, () => {
   });
 
   it(`should sign in function work correctly with axios error`, async () => {
-    axios.get = jest.fn().mockRejectedValue({
+    jest.spyOn(api, 'get').mockRejectedValue({
       message: 'Request failed with status code 404',
       response: {
         data: { error: 'Customer not found' },

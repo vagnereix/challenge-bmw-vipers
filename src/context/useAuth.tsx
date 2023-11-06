@@ -32,6 +32,8 @@ export function AuthProvider({ children }: SessionProviderProps) {
   const [user, setUser] = useState<Customer | null>(null);
 
   useEffect(() => {
+    if (!mailCustomer || user) return;
+
     async function getUserInfo() {
       const { data } = await api.get<{ customer: Customer }>('/customer', {
         params: {
@@ -43,7 +45,7 @@ export function AuthProvider({ children }: SessionProviderProps) {
     }
 
     getUserInfo();
-  }, [mailCustomer]);
+  }, [mailCustomer, user]);
 
   return (
     <AuthContext.Provider

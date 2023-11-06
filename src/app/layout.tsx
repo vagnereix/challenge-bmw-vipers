@@ -3,7 +3,11 @@ import '../styles/globals.scss';
 import { Inter } from 'next/font/google';
 import { AuthProvider } from '@/context/useAuth';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  preload: true,
+});
 
 export const metadata: Metadata = {
   title: {

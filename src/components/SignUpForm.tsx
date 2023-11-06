@@ -31,17 +31,17 @@ export function SignUpForm() {
     }
 
     try {
-      await api.post<{ customer: Customer }>('/customer', {
+      const { status } = await api.post<{ customer: Customer }>('/customer', {
         name: nameRef.current?.value,
         email: emailRef.current?.value,
       });
 
-      push('/sign-in');
+      if (status === 201) push('/sign-in');
     } catch (error: unknown) {
       const { response } = error as AxiosError<{ error: string }>;
 
-      setError(response?.data.error as string);
       setLoading(false);
+      setError(response?.data.error as string);
     }
   }
 
