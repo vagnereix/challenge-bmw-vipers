@@ -33,21 +33,11 @@ export async function POST(request: NextRequest) {
   const body: Customer = await request.json();
 
   const prismaCustomerRepository = new PrismaCustomerRepository();
-  const getCustomerUseCase = new GetCustomerUseCase(prismaCustomerRepository);
   const createCustomerUseCase = new CreateCustomerUseCase(
     prismaCustomerRepository,
   );
 
   try {
-    const hasCustomer = await getCustomerUseCase.execute(body.email);
-
-    if (hasCustomer) {
-      return NextResponse.json(
-        { error: 'Customer already exists' },
-        { status: 400 },
-      );
-    }
-
     const customer = await createCustomerUseCase.execute(body);
 
     if (customer) {
