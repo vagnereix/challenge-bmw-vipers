@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (pathname.includes('orders')) {
+  if (pathname.includes('order')) {
     if (user) {
       return NextResponse.next();
     }
@@ -38,6 +38,7 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
     '/',
     '/orders',
+    '/create-order',
     '/orders/:id*',
     '/sign-in',
     '/sign-up',
