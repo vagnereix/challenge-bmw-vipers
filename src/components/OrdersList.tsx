@@ -3,20 +3,33 @@
 import { useAuth } from '@/context/useAuth';
 import { api } from '@/services/api';
 import { Order } from '@prisma/client';
+import { AxiosError } from 'axios';
 import { Trash } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type OrdersListProps = { orders: Order[] };
 
 export function OrdersList({ orders }: OrdersListProps) {
   const { user } = useAuth();
+  const { refresh } = useRouter();
 
-  function handleDeleteOrder(orderId: string) {
-    api.delete(`/order/${orderId}`, {
-      headers: {
-        Authorization: user?.id,
-      },
-    });
+  async function handleDeleteOrder(orderId: string) {
+    try {
+      const { status } = await api.delete<{ message: string }>(
+        `/order/${orderId}`,
+        {
+          headers: {
+            Authorization: user?.id,
+          },
+        },
+      );
+
+      if (status === 200) refresh();
+    } catch (error: unknown) {
+      const { response } = error as AxiosError;
+      console.error(response?.data);
+    }
   }
 
   return (

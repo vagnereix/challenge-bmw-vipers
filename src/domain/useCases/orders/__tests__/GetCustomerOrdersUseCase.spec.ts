@@ -1,4 +1,4 @@
-import { GetCustomerOrdersUseCase } from '../GetCustomerOrdersUseCase';
+import { GetCustomerOrdersUseCase } from '../../orders/GetCustomerOrdersUseCase';
 
 const getCustomerOrdersSuccessSpy = jest.fn().mockResolvedValue([]);
 
@@ -7,7 +7,9 @@ const getCustomerOrdersErrorSpy = jest.fn();
 function makeSut(getCustomerOrdersSpy: jest.Mock) {
   const sut = new GetCustomerOrdersUseCase({
     create: jest.fn(),
-    getCustomerByEmail: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    getOrderById: jest.fn(),
     getCustomerOrders: jest.fn().mockImplementation(getCustomerOrdersSpy),
   });
 

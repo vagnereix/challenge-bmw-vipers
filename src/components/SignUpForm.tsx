@@ -94,6 +94,7 @@ export function SignUpForm() {
       <span className="text-gray-200 text-sm align-self-end">
         Already have an account?{' '}
         <Link
+          replace
           href="/sign-in"
           className="gradient-text-light font-semibold hover:underline"
         >
