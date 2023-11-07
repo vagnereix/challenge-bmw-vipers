@@ -1,4 +1,4 @@
-import { EditOrderForm } from '@/components/EditOrderForm';
+import { UpdateOrderForm } from '@/components/UpdateOrderForm';
 import { api } from '@/services/api';
 import { Metadata } from 'next';
 
@@ -17,7 +17,7 @@ export default async function EditOrderPage({ params }: EditOrderPageProps) {
 
   return (
     <main className="h-screen grid place-items-center">
-      <EditOrderForm order={data.order} />
+      <UpdateOrderForm order={data.order} />
     </main>
   );
 }

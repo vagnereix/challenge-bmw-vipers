@@ -16,7 +16,7 @@ type EditOrderFormProps = {
   order: Order;
 };
 
-export function EditOrderForm({ order }: EditOrderFormProps) {
+export function UpdateOrderForm({ order }: EditOrderFormProps) {
   const { user } = useAuth();
   const { push } = useRouter();
 
