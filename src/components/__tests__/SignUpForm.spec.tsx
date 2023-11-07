@@ -83,14 +83,6 @@ describe(`<SignUpForm />`, () => {
   });
 
   it(`should work correctly when name or email field is empty`, async () => {
-    jest.spyOn(api, 'get').mockRejectedValue({
-      message: 'Request failed with status code 404',
-      response: {
-        data: { error: 'Customer not found' },
-        status: 404,
-      },
-    });
-
     render(<SignUpForm />);
 
     const { inputs, button } = getInputAndButton();
@@ -106,16 +98,17 @@ describe(`<SignUpForm />`, () => {
     });
 
     await waitFor(() => {
+      expect(api.post).not.toHaveBeenCalled();
       expect(pushMock).not.toHaveBeenCalled();
     });
   });
 
   it(`should sign in function work correctly with axios error`, async () => {
     jest.spyOn(api, 'post').mockRejectedValue({
+      status: 404,
       message: 'Request failed with status code 404',
       response: {
         data: { error: 'Error creating customer' },
-        status: 404,
       },
     });
 
