@@ -1,89 +1,3 @@
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/26466516/141659551-d7ba5630-7200-46fe-863b-87818dae970a.png" alt="Next.js TypeScript Starter">
-</p>
-
-<br />
-
-<div align="center"><strong>Non-opinionated TypeScript starter for Next.js</strong></div>
-<div align="center">Highly scalable foundation with the best DX. All the tools you need to build your next project.</div>
-
-<br />
-
-<div align="center">
-  <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&style=flat-square&color=5e17eb&labelColor=000000" alt="PRs welcome!" />
-
-  <img alt="License" src="https://img.shields.io/github/license/jpedroschmitz/typescript-nextjs-starter?style=flat-square&color=5e17eb&labelColor=000000">
-
-  <a href="https://twitter.com/intent/follow?screen_name=jpedroschmitz">
-    <img src="https://img.shields.io/twitter/follow/jpedroschmitz?style=flat-square&color=5e17eb&labelColor=000000" alt="Follow @jpedroschmitz" />
-  </a>
-</div>
-
-<div align="center">
-  <sub>Created by <a href="https://twitter.com/jpedroschmitz">João Pedro</a> with the help of many <a href="https://github.com/jpedroschmitz/typescript-nextjs-starter/graphs/contributors">wonderful contributors</a>.</sub>
-</div>
-
-<br />
-
-## Features
-
-- ⚡️ Next.js 13 (App Router)
-- ⚛️ React 18
-- ⛑ TypeScript
-- 📏 ESLint — To find and fix problems in your code
-- 💖 Prettier — Code Formatter for consistent style
-- 🐶 Husky — For running scripts before committing
-- 🚓 Commitlint — To make sure your commit messages follow the convention
-- 🖌 Renovate — To keep your dependencies up to date
-- 🚫 lint-staged — Run ESLint and Prettier against staged Git files
-- 👷 PR Workflow — Run Type Check & Linters on Pull Requests
-- ⚙️ EditorConfig - Consistent coding styles across editors and IDEs
-- 🗂 Path Mapping — Import components or images using the `@` prefix
-
-## Quick Start
-
-The best way to start with this template is using [Create Next App](https://nextjs.org/docs/api-reference/create-next-app).
-
-```
-# yarn
-yarn create next-app -e https://github.com/jpedroschmitz/typescript-nextjs-starter
-# npm
-npx create-next-app -e https://github.com/jpedroschmitz/typescript-nextjs-starter
-# pnpm
-pnpm create next-app -e https://github.com/jpedroschmitz/typescript-nextjs-starter
-```
-
-### Development
-
-To start the project locally, run:
-
-```bash
-pnpm dev
-```
-
-Open `http://localhost:3000` with your browser to see the result.
-
-## Testimonials
-
-> [**“This starter is by far the best TypeScript starter for Next.js. Feature packed but un-opinionated at the same time!”**](https://github.com/jpedroschmitz/typescript-nextjs-starter/issues/87#issue-789642190)<br>
-> — Arafat Zahan
-
-> [**“I can really recommend the Next.js Typescript Starter repo as a solid foundation for your future Next.js projects.”**](https://corfitz.medium.com/create-a-custom-create-next-project-command-2a6b35a1c8e6)<br>
-> — Corfitz
-
-> [**“Brilliant work!”**](https://github.com/jpedroschmitz/typescript-nextjs-starter/issues/87#issuecomment-769314539)<br>
-> — Soham Dasgupta
-
-## Showcase
-
-List of websites that started off with Next.js TypeScript Starter:
-
-- [hygraph.com](https://hygraph.com)
-- [rocketseat.com.br](https://www.rocketseat.com.br)
-- [unfork.vercel.app](https://unfork.vercel.app)
-- [cryptools.dev](https://cryptools.dev)
-- [Add yours](https://github.com/jpedroschmitz/typescript-nextjs-starter/edit/main/README.md)
-
 ## Documentation
 
 ### Requirements
@@ -97,6 +11,35 @@ List of websites that started off with Next.js TypeScript Starter:
 - [`.husky`](.husky) — Husky configuration and hooks.<br>
 - [`public`](./public) — Static assets such as robots.txt, images, and favicon.<br>
 - [`src`](./src) — Application source code, including pages, components, styles.
+  - [`app`](./src/app) — Application pages and API Routes.
+    - [`(private)`](<./src/app/(private)>) — Directory for pages accessible only to authenticated users.
+      - [`create-order`](<./src/app/(private)/create-order>) — Directory for the order creation page.
+      - [`orders`](<./src/app/(private)/orders>) — Directory for the order listing page.
+        - [`[id]`](<./src/app/(private)/orders/[id]>) — Directory for Order details/edit Page.
+    - [`(public)`](<./src/app/(public)>) — Directory for pages accessible to all users.
+      - [`sign-in`](./src/app/sign-in) — Directory for the login page.
+      - [`sign-up`](./src/app/sign-up) — Directory for the registration page.
+    - [`actions.ts`](./src/app/actions.ts) — Archive for global application actions.
+    - [`api`](./src/app/api) — Directory for API routes.
+      - [`customer`](./src/app/api/customer/) — Directory for Customer API routes.
+      - [`order`](./src/app/api/order/) — Directory for Order API Routes.
+        - [`[id]`](./src/app/api/order/[id]/) — Directory for the Order API GET, PATH, and DELETE routes.
+      - [`layout.tsx`](./src/app/api/order/[id]/) — Application global Layout component.
+  - [`components`](./src/components/) — Directory for reusable components.
+    - [`__tests__`](./src/components/__tests__/) — Directory for component testing.
+  - [`context`](./src/context/) — Authentication context directory.
+  - [`domain`](./src/domain/)
+    - [`repositories`](./src/domain/repositories/) — Authentication context directory.
+      - [`customers`](./src/domain/repositories/customers/) — Directory for the Customer repository with its Interface and Implementation using Prisma.
+      - [`orders`](./src/domain/repositories/orders/) — Directory for the Order repository with its Interface and Implementation using Prisma.
+    - [`useCases`](./src/domain/useCases/) — Directory for Use Cases.
+      - [`customers`](./src/domain/useCases/customers) — Directory for Customer Use Cases.
+        - [`__tests__`](./src/domain/useCases/customers/__tests__/) — Directory for testing the Customer use case.
+      - [`orders`](./src/domain/useCases/orders/) — Directory for Order Use Cases.
+        - [`__tests__`](./src/domain/useCases/orders/__tests__/) — Directory for testing the Order use case.
+  - [`middleware.ts`](./src/middleware.ts) — Middleware responsible for controlling access to routes.
+  - [`services`](./src/services/) — Directory for the application services.
+  - [`styles`](./src/styles/) — Directory for the application global styles.
 
 ### Scripts
 
@@ -106,6 +49,9 @@ List of websites that started off with Next.js TypeScript Starter:
 - `pnpm type-check` — Validate code using TypeScript compiler.
 - `pnpm lint` — Runs ESLint for all files in the `src` directory.
 - `pnpm format` — Runs Prettier for all files in the `src` directory.
+- `pnpm test` — Runs test for all test files in the `src` directory.
+- `pnpm test:watch` — Runs test for all test files in the `src` directory waiting for updates.
+- `pnpm test:coverage` — Runs test for all test files in the `src` generating coverage reports.
 
 ### Path Mapping
 
@@ -121,6 +67,46 @@ import avatar from '@/public/avatar.png';
 ### Switch to Yarn/npm
 
 This starter uses pnpm by default, but this choice is yours. If you'd like to switch to Yarn/npm, delete the `pnpm-lock.yaml` file, install the dependencies with Yarn/npm, change the CI workflow, and Husky Git hooks to use Yarn/npm commands.
+
+## Configuration
+
+#### Variáveis de Ambiente
+
+This project uses Prisma to interact with the database. To set up Prisma, you need to set the environment variable `DATABASE_URL`.
+
+Create a `.env` file at the root of the project and add the following line:
+
+```ts
+DATABASE_URL = 'postgresql://user:password@localhost:5432/mydb?schema=public';
+```
+
+Replace `user`, `password`, `localhost`, `5432`, `mydb` and `public` by the details of your database.
+
+### Clone the Project
+
+After you configure the environment variable, you can run the project with the following commands:
+
+```shell
+# With Git installed, run in the terminal
+git clone git@github.com:vagnereix/challenge-bmw-vipers.git
+
+# Enter the cloned directory
+cd challenge-bmw-vipers
+
+```
+
+### Running the Project
+
+```shell
+# Install dependencies
+pnpm install
+
+# Run Prisma migrations
+pnpm prisma migrate dev
+
+# Run the project
+pnpm run dev
+```
 
 ## License
 
