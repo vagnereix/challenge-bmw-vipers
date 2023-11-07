@@ -5,8 +5,6 @@ import { UpdateOrderUseCase } from '@/domain/useCases/orders/UpdateOrderUseCase'
 import { Order } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-type OrderTypeDTO = Pick<Order, 'title' | 'customerId'>;
-
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } },
@@ -68,23 +66,16 @@ export async function DELETE(
   }
 }
 
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = params;
+export async function PATCH(request: NextRequest) {
   const { headers } = request;
   const userId = headers.get('authorization');
-  const body: OrderTypeDTO = await request.json();
+  const body: Order = await request.json();
 
   const prismaOrderRepository = new PrismaOrderRepository();
-  const getOrderUseCase = new GetOrderUseCase(prismaOrderRepository);
   const updateOrderUseCase = new UpdateOrderUseCase(prismaOrderRepository);
 
   try {
-    const order = await getOrderUseCase.execute(id);
-
-    if (userId !== order.customerId) {
+    if (userId !== body.customerId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

@@ -1,12 +1,10 @@
 import { IOrdersRepository } from '@/domain/repositories/orders/IOrdersRepository';
 import { Order } from '@prisma/client';
 
-type OrderTypeDTO = Pick<Order, 'title' | 'customerId'>;
-
 export class UpdateOrderUseCase {
   constructor(private orderRepository: IOrdersRepository) {}
 
-  async execute(data: OrderTypeDTO): Promise<void> {
+  async execute(data: Order): Promise<void> {
     const order = await this.orderRepository.update(data);
 
     if (!order) {
