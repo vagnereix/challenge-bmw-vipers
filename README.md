@@ -72,7 +72,7 @@ This starter uses pnpm by default, but this choice is yours. If you'd like to sw
 
 #### Variáveis de Ambiente
 
-This project uses Prisma to interact with the database. To set up Prisma, you need to set the environment variable `DATABASE_URL`.
+This project uses `Prisma` to interact with the `Postgres` database. To set up Prisma, you need to set the environment variable `DATABASE_URL`.
 
 Create a `.env` file at the root of the project and add the following line:
 
